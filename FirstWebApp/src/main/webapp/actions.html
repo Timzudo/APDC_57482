@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<script>
+    xmlhttp = new XMLHttpRequest();
+    function getToken(){
+        xmlhttp.onreadystatechange = function (){
+            if(xmlhttp.readyState == 4){
+                alert(xmlhttp.responseText);
+            }
+        }
+        let sessiontoken = JSON.parse(sessionStorage.getItem('token'));
+        var myObj = {   tokenId:sessiontoken};
+        var myJson = JSON.stringify(myObj);
+
+
+        xmlhttp.open("POST", "https://modified-talon-344017.appspot.com/rest/ti/token", true);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(myJson);
+    }
+
+    function logout(){
+        xmlhttp.onreadystatechange = function (){
+            if(xmlhttp.readyState == 4){
+                alert("Goodbye");
+                sessionStorage.removeItem('token');
+                window.location.href = "index.html"
+            }
+        }
+        let sessiontoken = JSON.parse(sessionStorage.getItem('token'));
+        var myObj = {   tokenId:sessiontoken};
+        var myJson = JSON.stringify(myObj);
+
+
+        xmlhttp.open("POST", "https://modified-talon-344017.appspot.com/rest/ti/logout", true);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(myJson);
+    }
+</script>
+
+<body>
+<p>Currently logged in</p>
+
+<br>
+<button onclick="location.href='remove.html'" type="button">
+    Delete user</button>
+
+<br>
+<br>
+<button onclick="location.href='list.html'" type="button">
+    List users</button>
+
+<br>
+<br>
+<button onclick="location.href='modify.html'" type="button">
+    Modify user</button>
+
+<br>
+<br>
+<button onclick="location.href='changepass.html'" type="button">
+    Change password</button>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<button onclick=getToken() type="button">
+    Show session token</button>
+
+<br>
+<br>
+<button onclick=logout() type="button">
+    Logout</button>
+
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<script>
+    xmlhttp = new XMLHttpRequest();
+    let token;
+    function getData(){
+        xmlhttp.onreadystatechange = function (){
+            if(xmlhttp.readyState == 4){
+                if(xmlhttp.status == 200){
+                    token = xmlhttp.responseText;
+                    alert("Logged in successfully!");
+                    sessionStorage.setItem('token', token);
+                    window.location.href = "actions.html"
+                }
+                else{
+                    alert("Wrong username or password");
+                }
+            }
+        }
+        var myObj = {   username:document.getElementById("username").value,
+            password:document.getElementById("password").value};
+        var myJson = JSON.stringify(myObj);
+
+
+        xmlhttp.open("POST", "https://modified-talon-344017.appspot.com/rest/ti/login", true);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(myJson);
+    }
+</script>
+
+
+<body>
+
+<p>Login</p>
+
+<br>
+<p>Login information:</p>
+<label>Username</label>
+<input type="text" id="username">
+
+<br>
+<label>Password</label>
+<input type="password" id="password">
+
+<br>
+<input type="button" value="login" onclick="getData();"/>
+
+
+</body>
+</html>

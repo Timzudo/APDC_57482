@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List users</title>
+</head>
+
+<script>
+    xmlhttp = new XMLHttpRequest();
+    let div = document.getElementById("list");
+
+    function getData(){
+        xmlhttp.onreadystatechange = function (){
+            if(xmlhttp.readyState == 4){
+                const obj = JSON.parse(xmlhttp.responseText);
+                console.log(obj[0]);
+                document.getElementById("userlist").innerHTML = null;
+                for(let i = 0; i<obj.length; i++){
+                    document.getElementById("userlist").innerHTML += Object.values(obj[i]) + "<br />";
+                }
+            }
+        }
+
+        let sessiontoken = JSON.parse(sessionStorage.getItem('token'));
+        var myObj = {tokenId:sessiontoken};
+        var myJson = JSON.stringify(myObj);
+
+
+        xmlhttp.open("POST", "https://modified-talon-344017.appspot.com/rest/ti/list", true);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(myJson);
+    }
+
+
+</script>
+
+
+<body>
+
+<p onload="getData()" id="list"> User list:</p>
+
+<br>
+<br>
+<br>
+
+<p id="userlist"></p>
+
+<input type="button" value="Load list" onclick="getData();"/>
+
+</body>
+</html>

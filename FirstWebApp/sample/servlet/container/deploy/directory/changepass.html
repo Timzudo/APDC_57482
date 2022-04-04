@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Change password</title>
+</head>
+
+<script>
+    xmlhttp = new XMLHttpRequest();
+    function getData(){
+        xmlhttp.onreadystatechange = function (){
+            if(xmlhttp.readyState == 4){
+                alert(xmlhttp.responseText);
+            }
+        }
+        let sessiontoken = JSON.parse(sessionStorage.getItem('token'));
+        var myObj = {   tokenId:sessiontoken,
+                        oldPassword:document.getElementById("oldpassword").value,
+                        newPassword:document.getElementById("newpassword").value,
+                        confirmation:document.getElementById("confirmation").value};
+        var myJson = JSON.stringify(myObj);
+
+
+        xmlhttp.open("POST", "https://modified-talon-344017.appspot.com/rest/ti/changepass", true);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(myJson);
+    }
+</script>
+
+<body>
+
+<p>Password fields:</p>
+<br>
+<label>Old password</label>
+<input type="password" id="oldpassword">
+
+<br>
+<br>
+<label>New password</label>
+<input type="password" id="newpassword">
+
+<br>
+<label>Confirmation</label>
+<input type="password" id="confirmation">
+
+<br>
+<br>
+<input type="button" value="Change password" onclick="getData();"/>
+
+</body>
+</html>

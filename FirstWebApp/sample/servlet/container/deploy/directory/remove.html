@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8"/>
+  <title>Delete user</title>
+</head>
+
+<script>
+  xmlhttp = new XMLHttpRequest();
+  function getData(){
+    xmlhttp.onreadystatechange = function (){
+      if(xmlhttp.readyState == 4){
+        alert(xmlhttp.responseText);
+      }
+    }
+
+    let sessiontoken = JSON.parse(sessionStorage.getItem('token'));
+    var myObj = {   usernameDelete:document.getElementById("userDelete").value,
+                    tokenId:sessiontoken};
+    var myJson = JSON.stringify(myObj);
+
+
+    xmlhttp.open("POST", "https://modified-talon-344017.appspot.com/rest/ti/remove", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(myJson);
+  }
+</script>
+
+<body>
+
+<p>Delete user</p>
+
+<br>
+<br>
+<label>User to delete</label>
+<input type="text" id="userDelete">
+
+<br>
+<br>
+<input type="button" value="Delete user" onclick="getData();"/>
+
+</body>
+</html>
